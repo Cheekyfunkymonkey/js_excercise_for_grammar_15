@@ -22,12 +22,19 @@ class KitchenTimer {
     this._remainingSeconds = 0;
     this._isRunning = false;
     //setInterval
-    window.setInterval(() => {
-      if (this._isRunning && this._remainingSeconds >= 1) {
-        this._remainingSeconds--;
-        console.log(this._name, "残り時間" + this._remainingSeconds + "秒");
+    window.setInterval(
+      reduceTime,
+      1000,
+      this._name,
+      this._isRunning,
+      this._remainingSeconds
+    );
+    function reduceTime(name, isRunning, remainingSeconds) {
+      if (isRunning && remainingSeconds >= 1) {
+        remainingSeconds--;
+        console.log(name, "残り時間" + remainingSeconds + "秒");
       }
-    }, 1000);
+    }
   }
 
   setSeconds(seconds) {
@@ -55,8 +62,3 @@ timer2.setSeconds(5);
 // - window.setInterval内に実装したconsole.logで「'タイマーの名前 : 残り時間〇秒'」のように表示されるのを確認する
 timer1.start();
 timer2.start();
-
-// 質問させてくださいmm
-// １、classのconstructorの中に通常の関数（例：function Math() {...}など)を定義することはできますか？
-//　２、下記の出力結果がundefinedになるのはなぜでしょうか？
-console.log(timer1.name);
